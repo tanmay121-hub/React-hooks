@@ -1,22 +1,56 @@
 import React, { useState } from "react";
 
 const App = () => {
-  // let counter = 0;
   const [counter, setCounter] = useState(0);
-  function IncreaseCounter() {
-    setCounter(counter + 1);
-    console.log(counter);
+  const [show, setShow] = useState(true);
+  const [color, setColor] = useState("white");
+
+  function IncreaseCounter(num) {
+    setCounter(counter + num);
+    setColor("green");
   }
-  function DecreaseCounter() {
-    setCounter(counter - 1);
-    console.log(counter);
+
+  function DecreaseCounter(num) {
+    setCounter(counter - num);
+    setColor("red");
   }
+
+  const ResetButton = () => {
+    setCounter(0);
+  };
+  const onInputChange = (ele) => {
+    console.log(ele);
+
+    setColor(ele.target.value);
+  };
+
   return (
-    <div>
-      <button onClick={IncreaseCounter}>Click me +</button>
-      {counter}
-      <button onClick={DecreaseCounter}>Click me -</button>
-    </div>
+    <>
+      <div>
+        {show && (
+          <div style={{ margin: "10px" }}>
+            <button onClick={() => IncreaseCounter(2)}>Click me +</button>
+
+            <span style={{ color: color }}>{counter}</span>
+
+            <button disabled={counter <= 0} onClick={() => DecreaseCounter(2)}>
+              Click me -
+            </button>
+
+            <button onClick={ResetButton}>Reset</button>
+          </div>
+        )}
+        <hr />
+        <button onClick={() => setShow(!show)} type="button">
+          {show ? "Hide" : "Show"} Controls
+        </button>
+        <hr />
+        <label htmlFor="">Enter the Backgroud Color </label>
+        <input type="text" onChange={onInputChange} />
+        <p>Temp Text for changing color of text</p>
+        <button></button>
+      </div>
+    </>
   );
 };
 
